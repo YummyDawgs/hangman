@@ -1,13 +1,78 @@
 import random
 from collections import Counter
 
-someWords = '''apple banana mango strawberry 
+someWords = '''apple banana mango strawberry
 orange grape pineapple apricot lemon coconut watermelon
-cherry papaya berry peach lychee muskmelon 
+cherry papaya berry peach lychee muskmelon
 '''
 
 someWords = someWords.split(' ')
 word = random.choice(someWords)
+
+
+def print_hangman(lives):
+    """Prints the hangman figure based on the number of lives left."""
+
+    hangman_pics = [
+        """
+          +---+
+          |   |
+              |
+              |
+              |
+              |
+        =========""",
+        """
+          +---+
+          |   |
+          O   |
+              |
+              |
+              |
+        =========""",
+        """
+          +---+
+          |   |
+          O   |
+          |   |
+              |
+              |
+        =========""",
+        """
+          +---+
+          |   |
+          O   |
+         /|   |
+              |
+              |
+        =========""",
+        """
+          +---+
+          |   |
+          O   |
+         /|\  |
+              |
+              |
+        =========""",
+        """
+          +---+
+          |   |
+          O   |
+         /|\  |
+         /    |
+              |
+        =========""",
+        """
+          +---+
+          |   |
+          O   |
+         /|\  |
+         / \  |
+              |
+        =========""",
+    ]
+
+    print(hangman_pics[6 - lives])
 
 if __name__ == '__main__':
     print("Guess the word! HINT: word is a name of a fruit")
@@ -19,7 +84,8 @@ if __name__ == '__main__':
     playing = True
 
     letterGuessed = ''
-    chances = len(word) + 2
+    numLives = 6
+    chances = len(word)+2
     correct = 0
     flag = 0
     try:
@@ -50,7 +116,12 @@ if __name__ == '__main__':
                 k = word.count(guess)
                 for _ in range(k):
                     letterGuessed += guess  # The guessed letter is added as many times as it occurs
+            
+            else: 
+                print("Your guess of {} is wrong, stupid".format(guess))
+                numLives -= 1
 
+            print_hangman(numLives)
             # Print the word
             for char in word:
                 if char in letterGuessed and (Counter(letterGuessed) != Counter(word)):
